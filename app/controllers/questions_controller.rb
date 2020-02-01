@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
 
-  before_action :load_question, only: %i[show edit update destroy]
+  #before_action :load_question, only: %i[show edit update destroy]
 
   def index
     @questions = Question.all
@@ -26,7 +26,7 @@ class QuestionsController < ApplicationController
 
 
   def update
-    if @question.update(question_params)
+    if question.update(question_params)
       redirect_to @question
     else
       render :edit
@@ -34,18 +34,20 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy
+    question.destroy
     redirect_to questions_path
   end
 
   private
 
-  def load_question
-    @question = Question.find(params[:id])
+  def question
+    @question ||= params[:id] ? Question.find(params[:id]) : Question.new
   end
 
   def question_params
     params.require(:question).permit(:title, :body)
   end
+
+  helper_method :question
 
 end
