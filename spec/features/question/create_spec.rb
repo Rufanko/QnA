@@ -4,17 +4,20 @@ feature 'User can create a question', %q{
   As an authenticated user
   I'd like to be able to ask the question
 } do
-  given(:user) {User.create!(email: 'asd@test.com', password: '12345679')}
-  background { visit new_user_session_path}
+  given(:user) {create(:user)}
+describe 'Authenticated user' do
 
-  scenario 'Authenticated user asks a question' do
+
+  background do
+    visit new_user_session_path
     fill_in 'Email',  with: user.email
     fill_in 'Password', with: user.password
     click_button 'Log in'
-
     visit questions_path
     click_on 'Ask question'
+  end
 
+  scenario 'Authenticated user asks a question' do
     fill_in 'Title', with: 'Test question'
     fill_in 'Body', with: 'content'
     click_on 'Ask'
@@ -22,8 +25,16 @@ feature 'User can create a question', %q{
     expect(page).to have_content 'Your question successfully created.'
     expect(page).to have_content 'Test question'
     expect(page).to have_content 'content'
-
   end
+
+  scenario 'Authenticated user asks a question with errors' do
+    visit questions_path
+    click_on 'Ask question'
+    click_on 'Ask'
+    expect(page).to have_content "Title can't be blank"
+  end
+end
+
 
   scenario 'Unathenticated user asks a question' do
     visit questions_path
@@ -31,21 +42,6 @@ feature 'User can create a question', %q{
 
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
-
-  scenario 'Authenticated user asks a question with errors' do
-    fill_in 'Email',  with: user.email
-    fill_in 'Password', with: user.password
-    click_button 'Log in'
-
-    visit questions_path
-    click_on 'Ask question'
-
-    click_on 'Ask'
-
-    expect(page).to have_content "Title can't be blank"
-
-  end
-
 
 
 end
