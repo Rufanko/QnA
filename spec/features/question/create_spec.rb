@@ -17,7 +17,7 @@ describe 'Authenticated user' do
     click_on 'Ask question'
   end
 
-  scenario 'Authenticated user asks a question' do
+  scenario 'asks a question' do
     fill_in 'Title', with: 'Test question'
     fill_in 'Body', with: 'content'
     click_on 'Ask'
@@ -27,7 +27,7 @@ describe 'Authenticated user' do
     expect(page).to have_content 'content'
   end
 
-  scenario 'Authenticated user asks a question with errors' do
+  scenario 'asks a question with errors' do
     visit questions_path
     click_on 'Ask question'
     click_on 'Ask'
