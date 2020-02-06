@@ -10,6 +10,10 @@
   </head>
 
   <body>
+    <% if user_signed_in? %>
+    <p class="nav user"> Welcome, <b><%= current_user.email %> </b> </p>
+    <p class="logout"> <b><%= link_to 'Logout', destroy_user_session_path, method: :delete %> </b> </p>
+    <% end %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>
