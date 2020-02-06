@@ -1,2 +1,6 @@
-h1 = question.title
-p = question.body
+= render @question
+p = 'All answers to this question'
+p = render @question.answers
+
+h3= 'Add answer to this question'
+= render 'answers/form', question: @question, answer: @question.answers.new
