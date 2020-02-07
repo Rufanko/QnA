@@ -10,6 +10,7 @@ class AnswersController < ApplicationController
 
   def create
     @answer = current_user.authored_answers.new(answer_params)
+
     if @answer.save
       redirect_to @answer
     else

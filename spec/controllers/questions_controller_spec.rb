@@ -117,12 +117,17 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    before { login(user) }
+    before {login(user)}
 
     let!(:question) { create(:question) }
 
-    it 'deletes the question' do
+    it 'deletes the question if user is author of this questions' do
+      login(question.author)
       expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+    end
+
+    it 'doesnt delete the question if user is NOT author of this questions' do
+      expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
     end
 
     it 'redirects to index' do
