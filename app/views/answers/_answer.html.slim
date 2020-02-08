@@ -1,4 +1,4 @@
 b= answer.body
-p= Actions
-  -if current_user.author?(answer)
+h3Actions
+ - if current_user.author?(answer)
     = link_to 'Delete', answer_path(answer), method: :delete, data: { confirm: 'Are you sure' }

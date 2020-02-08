@@ -1,4 +1,5 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!, except: %i[index show]
 
 
   def show
@@ -14,7 +15,7 @@ class AnswersController < ApplicationController
     @answer.author = current_user
 
     if @answer.save
-      redirect_to @answer
+      redirect_to @answer, notice: 'Your answer successfully created.'
     else
       render :new
     end
