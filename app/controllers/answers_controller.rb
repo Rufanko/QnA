@@ -25,8 +25,12 @@ class AnswersController < ApplicationController
     if current_user.author?(answer)
       answer.destroy
       redirect_to question_path(answer.question),  notice: 'Your answer successfully deleted.'
-     end
+
+   else
+     redirect_to question_path(answer.question),  notice: 'Something went wrong...'
+   end
   end
+
 
   private
 

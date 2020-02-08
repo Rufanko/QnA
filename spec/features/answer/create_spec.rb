@@ -30,9 +30,7 @@ end
 
   scenario 'Unathenticated user asks a question' do
     visit question_path(question)
-    click_on 'Add answer'
-
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to_not have_content 'Add answer.'
   end
 
 
