@@ -39,7 +39,7 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
-  describe ' POST #create' do
+  describe 'POST #create' do
     before {login(user)}
 
     context 'with valid attributes' do
@@ -85,6 +85,7 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     it 'redirects to index' do
+      
       delete :destroy, params: { id: answer }
       expect(response).to redirect_to question_path(answer.question)
     end

@@ -28,7 +28,7 @@ feature 'User can view certain question', %q{
       expect(page).to have_content question.body
       expect(page).to have_content 'All answers to this question'
       answers.each {|answer| expect(page).to have_content answer.body }
-      #expect(page).to_not have_content 'Add answer to this question'
-      #expect(page).to_not have_field 'Body'
+      expect(page).to_not have_content 'Add answer to this question'
+      expect(page).to_not have_field 'Body'
     end
   end
