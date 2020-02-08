@@ -22,8 +22,10 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    answer.destroy if current_user.author?(answer)
-    redirect_to question_path(answer.question)
+    if current_user.author?(answer)
+      answer.destroy
+      redirect_to question_path(answer.question),  notice: 'Your answer successfully deleted.'
+     end
   end
 
   private
