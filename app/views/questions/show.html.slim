@@ -3,4 +3,4 @@ p = 'All answers to this question'
 p = render @question.answers
 - if current_user.present?
   h3 Add answer to this question
-  = render 'answers/form', question: @question, answer: @question.answers.new
+  = render 'answers/form', question: @question, answer: @answer || @question.answers.new
