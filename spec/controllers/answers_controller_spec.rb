@@ -1,28 +1,28 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let (:question) {create (:question) }
-  let(:user) {create(:user)}
+  let! (:question) {create (:question) }
+  let!(:user) {create(:user)}
 
 
-  describe 'GET #new' do
-    before {login(user)}
-    before {get :new, params: {question_id: question} }
-
-
-    it 'assigns the requested question to @question' do
-      expect(assigns(:question)).to eq(question)
-    end
-
-    it 'assigns a new  Answer to @answer' do
-      expect(assigns(:answer)).to be_a_new(Answer)
-    end
-
-    it 'renders correct view' do
-      expect(response).to render_template :new
-    end
-
-  end
+  # describe 'GET #new' do
+  #   before {login(user)}
+  #   before {get :new, params: {question_id: question} }
+  #
+  #
+  #   it 'assigns the requested question to @question' do
+  #     expect(assigns(:question)).to eq(question)
+  #   end
+  #
+  #   it 'assigns a new  Answer to @answer' do
+  #     expect(assigns(:answer)).to be_a_new(Answer)
+  #   end
+  #
+  #   it 'renders correct view' do
+  #     #expect(response).to redirect_to
+  #   end
+  #
+  # end
 
   describe 'GET #show' do
 
@@ -56,6 +56,13 @@ RSpec.describe AnswersController, type: :controller do
         post :create,  params: { answer: attributes_for(:answer), question_id: question }
         expect(response).to redirect_to assigns(:answer)
       end
+
+      it 'assigns correct author for the answer' do
+        post :create,  params: { answer: attributes_for(:answer), question_id: question }
+        expect(user).to be_author(assigns(:answer))
+      end
+
+
     end
 
     context 'with invalid attributes' do
@@ -85,7 +92,7 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     it 'redirects to index' do
-      
+
       delete :destroy, params: { id: answer }
       expect(response).to redirect_to question_path(answer.question)
     end
