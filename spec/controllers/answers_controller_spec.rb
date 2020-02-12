@@ -5,24 +5,6 @@ RSpec.describe AnswersController, type: :controller do
   let!(:user) {create(:user)}
 
 
-  # describe 'GET #new' do
-  #   before {login(user)}
-  #   before {get :new, params: {question_id: question} }
-  #
-  #
-  #   it 'assigns the requested question to @question' do
-  #     expect(assigns(:question)).to eq(question)
-  #   end
-  #
-  #   it 'assigns a new  Answer to @answer' do
-  #     expect(assigns(:answer)).to be_a_new(Answer)
-  #   end
-  #
-  #   it 'renders correct view' do
-  #     #expect(response).to redirect_to
-  #   end
-  #
-  # end
 
   describe 'GET #show' do
 
@@ -54,7 +36,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirects to show view' do
         post :create,  params: { answer: attributes_for(:answer), question_id: question }
-        expect(response).to redirect_to assigns(:answer)
+        expect(response).to redirect_to assigns(:question)
       end
 
       it 'assigns correct author for the answer' do
@@ -70,9 +52,9 @@ RSpec.describe AnswersController, type: :controller do
         expect {post :create, params: { answer: attributes_for(:answer, :invalid), question_id: question } }.to_not change(question.answers, :count)
       end
 
-      it 're-renders new view' do
+      it 're-renders  question show view' do
         post :create, params: { answer: attributes_for(:answer, :invalid), question_id: question }
-        expect(response).to render_template :new
+        expect(response).to render_template 'questions/show'
       end
     end
   end

@@ -6,18 +6,15 @@ class AnswersController < ApplicationController
     @answer = Answer.find(params[:id])
   end
 
-  #def new
-  #  @answer = question.answers.new
-  #end
 
   def create
     @answer = question.answers.new(answer_params)
     @answer.author = current_user
 
     if @answer.save
-      redirect_to @answer, notice: 'Your answer successfully created.'
+      redirect_to @question, notice: 'Your answer successfully created.'
     else
-      redirect_to question_path(answer.question)
+      render 'questions/show'
     end
   end
 
