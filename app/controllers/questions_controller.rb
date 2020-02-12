@@ -17,7 +17,7 @@ class QuestionsController < ApplicationController
   def edit; end
 
   def create
-    @question = current_user.authored_questions.new(question_params)
+    @question = current_user.questions.new(question_params)
 
     if @question.save
       redirect_to @question, notice: 'Your question successfully created.'
@@ -36,9 +36,8 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    question.destroy if current_user.author?(question)  
+    question.destroy if current_user.author?(question)
     redirect_to questions_path
-
   end
 
   private

@@ -63,6 +63,12 @@ RSpec.describe QuestionsController, type: :controller do
         post :create, params: { question: attributes_for(:question) }
         expect(response).to redirect_to assigns(:question)
       end
+
+      it 'assigns correct author for the question' do
+        post :create, params: { question: attributes_for(:question) }
+        expect(user).to be_author(assigns(:question))
+      end
+
     end
 
     context 'with invalid attributes' do
