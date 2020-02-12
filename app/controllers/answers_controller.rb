@@ -1,14 +1,14 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: %i[index show]
+  before_action :authenticate_user!, except: %i[index show crea ]
 
 
   def show
     @answer = Answer.find(params[:id])
   end
 
-  def new
-    @answer = question.answers.new
-  end
+  #def new
+  #  @answer = question.answers.new
+  #end
 
   def create
     @answer = question.answers.new(answer_params)
@@ -17,7 +17,7 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to @answer, notice: 'Your answer successfully created.'
     else
-      render :new
+      redirect_to question_path(answer.question)
     end
   end
 
