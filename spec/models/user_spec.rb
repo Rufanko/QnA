@@ -17,8 +17,8 @@ RSpec.describe User, type: :model do
     let(:question_without_author) {create(:question)}
     let(:question) {create(:question, author: user)}
     it 'should correctly check the authorship' do
-      expect(user.author?(question)).to eq true
-      expect(user.author?(question_without_author)).to eq false
+      expect(user).to be_author(question)
+      expect(user).not_to be_author(question_without_author)
     end
   end
 
